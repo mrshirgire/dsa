@@ -2,14 +2,14 @@ public class BinarySearch {
 
     public static void main(String[] args) {
         int[] arr = {4, 5, 6, 8, 10};
-        System.out.println(search(arr, 8));
+        System.out.println(search(arr, 67));
 
     }
 
     public static int search(int[] arr, int target){
 
         int start = 0;
-        int end = arr.length;
+        int end = arr.length - 1;
 
         while(start<=end){
 
