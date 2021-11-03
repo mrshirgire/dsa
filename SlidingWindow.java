@@ -8,16 +8,66 @@ public class SlidingWindow {
 //        System.out.println(maxSum1(nums, 3));
 //        System.out.println(maxSum2(nums, 3));
 
+        System.out.println(anagramCount("aabaabaa", "aaba"));
+
+
         //int[] nums = {12, -1, -7, 8, 15, 10, 16, 28};
-        //System.out.println(Arrays.toString(firstNegative(nums, 3)));
+        //System.out.println((firstNegative(nums, 3)));
         //System.out.println(maxNumber(nums, 3));
 
         //int[] nums = { 3, 1, 1, 4, 2, 1, 1, 1, 1, 2, 3};
         //System.out.println(largestWindowSizeSum(nums,5));
 
         //System.out.println(largestSubStringWithKUniqueChar("aabcehffffggggkkkk", 3));
-        System.out.println(largestSubStringWithNonRepetitiveChar("nfpdmpi"));
+        //System.out.println(largestSubStringWithNonRepetitiveChar("nfpdmpi"));
 
+
+    }
+
+    private static int anagramCount(String s, String s1){
+        int count = 0;
+
+        int i=0, j=0;
+
+        Map<Character, Integer> map = new HashMap<>();
+        for(int k=0; k<s1.length(); k++){
+
+
+            int cnt = map.containsKey(s.charAt(k)) ? map.get(s.charAt(k)) + 1: 1;
+            map.put(s.charAt(k), cnt);
+        }
+
+        while (j<s.length()){
+
+            if(map.containsKey(s.charAt(j))){
+                map.put(s.charAt(j), map.get(s.charAt(j)) - 1);
+            }
+
+            if(j - i + 1 < s1.length()) j++;
+            else if(j - i + 1 == s1.length()){
+
+                boolean flag = true;
+
+                Set<Map.Entry<Character, Integer>> set  = map.entrySet();
+                for(Map.Entry entry : set){
+                    if((int)entry.getValue() > 0){
+                        flag = false;
+                        break;
+                    }
+                }
+
+                count = flag == true ? count + 1: count;
+
+
+                if(map.containsKey(s.charAt(i))){
+                    map.put(s.charAt(i), map.get(s.charAt(i)) - 1);
+                }
+
+                i++; j++;
+            }
+        }
+
+        return count;
     }
 
     private static int maxSum1(int[] nums, int windowSize) {
@@ -89,7 +139,7 @@ public class SlidingWindow {
 
     }
 
-    private static int[] firstNegative(int[] nums, int windowSize){
+    private static List<Integer> firstNegative(int[] nums, int windowSize){
 
         /* Brute force solution*/
         /*
@@ -107,7 +157,28 @@ public class SlidingWindow {
 
         return ans;*/
 
-        int ansSize = nums.length - windowSize + 1;
+
+        Queue<Integer> q = new LinkedList<>();
+        List<Integer> ans = new ArrayList<>();
+        int i = 0, j = 0;
+        while(j< nums.length){
+
+            if (nums[j] < 0 ) q.add(nums[j]);
+
+            if(j - i + 1 < windowSize) j++;
+            else if(j - i + 1 == windowSize){
+
+                int val = q.isEmpty() ? 0 : q.peek();
+                ans.add(val);
+
+                if(!q.isEmpty() && q.peek() == nums[i]) q.remove();
+                i++;j++;
+            }
+        }
+
+        return ans;
+
+        /*int ansSize = nums.length - windowSize + 1;
         int[] ans = new int[ansSize];
 
         int i=0, j=0;
@@ -133,7 +204,7 @@ public class SlidingWindow {
             j++; i++;
         }
 
-        return ans;
+        return ans;*/
     }
 
     private static int largestWindowSizeSum(int[] nums, int k){

@@ -1,3 +1,4 @@
+
 class CNode {
     int data;
     CNode next;
@@ -17,7 +18,6 @@ public class CLinkedList {
 
         if (head == null) {
             head = newNode;
-            newNode.next = head;
         } else {
             CNode last = head;
             while (last.next != head) {
@@ -25,11 +25,10 @@ public class CLinkedList {
             }
 
             last.next = newNode;
-            newNode.next = head;
         }
+        newNode.next = head;
 
         return head;
-
     }
 
     public CNode add(int data, int position){

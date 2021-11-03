@@ -36,21 +36,21 @@ class LinkedListDemo{
         // cLinkedList.add(11, 3);
         // cLinkedList.printList();
 
-        BST bst = new BST();
-
-        bst.root =  bst.add(bst.root, 10);
-        bst.root = bst.add(bst.root, 20);
-        bst.root = bst.add(bst.root, 5);
-        bst.root = bst.add(bst.root, 45);
-        bst.root = bst.add(bst.root, 22);
-        bst.root = bst.add(bst.root, 0);
-        bst.root = bst.add(bst.root, 11);
-        bst.printBSTInOrder(bst.root);
-        System.out.println();
-        System.out.println("search result: "+bst.search(bst.root, 11));
-        bst.delete(bst.root, 45);
-        System.out.println();
-        bst.printBSTInOrder(bst.root);
-        System.out.println();
+//        BST bst = new BST();
+//
+//        bst.root =  bst.add(bst.root, 10);
+//        bst.root = bst.add(bst.root, 20);
+//        bst.root = bst.add(bst.root, 5);
+//        bst.root = bst.add(bst.root, 45);
+//        bst.root = bst.add(bst.root, 22);
+//        bst.root = bst.add(bst.root, 0);
+//        bst.root = bst.add(bst.root, 11);
+//        bst.printBSTInOrder(bst.root);
+//        System.out.println();
+//        System.out.println("search result: "+bst.search(bst.root, 11));
+//        bst.delete(bst.root, 45);
+//        System.out.println();
+//        bst.printBSTInOrder(bst.root);
+//        System.out.println();
     }
 }

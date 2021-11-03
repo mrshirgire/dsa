@@ -37,7 +37,7 @@ public class BSMatrix {
         return new int[]{-1, -1};
     }
 
-    //recuresive method
+    //recursive method
     private static int[] binarySearch(int[][] matrix, int target, int lowerBond, int upperBond ) {
 
         if(lowerBond>matrix[0].length-1 || upperBond < 0)

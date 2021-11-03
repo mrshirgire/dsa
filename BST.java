@@ -34,7 +34,7 @@ public class BST {
         return root;
     }
 
-    public void add_(BSTNode root, int data){
+    public BSTNode add_(BSTNode root, int data){
 
         BSTNode prev = null;
         
@@ -59,7 +59,8 @@ public class BST {
             if(data < prev.data)
                 prev.left = newNode;
         }
-        
+
+        return prev;
 
     }
 
@@ -118,13 +119,10 @@ public class BST {
     public BSTNode searchIter(BSTNode root, int data){
 
         while(root != null){
-            if(root.data == data)
-                return root;
-        
-            if(data > root.data)
-                root = root.right;
-            else
-                root = root.left;
+
+            if(root.data == data) return root;
+
+            root = data > root.data ? root.right : root.left;
         }
 
         return null;
