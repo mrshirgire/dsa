@@ -6,10 +6,10 @@ public class Tree {
 
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        createTree();
+        add();
     }
 
-    private static Node createTree() {
+    private static Node add() {
 
         Node node = null;
 
@@ -22,10 +22,10 @@ public class Tree {
         node = new Node(data);
 
         System.out.println("Enter data for left of "+data);
-        node.left = createTree();
+        node.left = add();
 
         System.out.println("Enter data for right of "+data);
-        node.right =createTree();
+        node.right =add();
 
         return node;
 
