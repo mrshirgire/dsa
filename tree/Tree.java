@@ -19,6 +19,9 @@ public class Tree {
         printRightView(root);
         printTopView(root);
         printBottomView(root);
+        int diameter = longestPath(root);
+        System.out.println("diameter: "+diameter);
+
 
     }
 
@@ -214,6 +217,38 @@ public class Tree {
             System.out.print(v+"->");
         });
         System.out.println();
+    }
+
+
+    public Node convertToDLL(Node root, Node head, Node prev){
+
+        if(root == null)
+            return  head;
+
+        convertToDLL(root.left, head, prev);
+        if(prev == null){
+            head = root;
+        }else {
+            root.left = prev;
+            prev.right = root;
+
+        }
+        prev = root;
+
+        return convertToDLL(root.right, head, prev);
+    }
+
+
+    public static int longestPath(Node root){
+
+        if(root == null) return 0;
+
+        int dl = longestPath(root.left);
+        int dr = longestPath(root.right);
+        int curr = height(root.left) + height(root.right) + 1;
+
+        return Math.max(curr, Math.max(dl, dr));
+
     }
 }
 
