@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class Graph {
 
-    LinkedList<Integer>[] adj;
+    static LinkedList<Integer>[] adj;
 
     public static void main(String[] args) {
         Graph graph = new Graph(5);
@@ -18,6 +18,9 @@ public class Graph {
         graph.addEdge(3, 4);
 
         System.out.println(graph.BFS(0, 3));
+        boolean isVisited[] = new boolean[ adj.length];
+        isVisited[0] = true;
+        System.out.println(graph.DFS(0, 3, isVisited));
 
 
     }
@@ -25,19 +28,19 @@ public class Graph {
     Graph(int noOfVertices){
         adj = new LinkedList[noOfVertices];
         for(int i = 0; i<noOfVertices; i++){
-            this.adj[i] = new LinkedList<>();
+            adj[i] = new LinkedList<>();
         }
     }
 
     public void addEdge(int source, int destination){
-        this.adj[source].add(destination);
-        this.adj[destination].add(source);
+        adj[source].add(destination);
+        adj[destination].add(source);
     }
 
     public int BFS(int source, int destination){
         Queue<Integer> q = new LinkedList<>();
-        boolean isVisited[] = new boolean[ this.adj.length];
-        int[] origin = new int[this.adj.length];
+        boolean isVisited[] = new boolean[ adj.length];
+        int[] origin = new int[adj.length];
 
         origin[source] = -1;
         isVisited[source] =true;
@@ -47,7 +50,7 @@ public class Graph {
 
             int vertex = q.poll();
 
-            for(int neighbor:  this.adj[vertex]){
+            for(int neighbor:  adj[vertex]){
                 if(!isVisited[neighbor]){
                     isVisited[neighbor] = true;
                     origin[neighbor] = vertex;
@@ -64,5 +67,21 @@ public class Graph {
         }
 
         return distance;
+    }
+
+    public boolean DFS(int source, int destination, boolean[] visited){
+
+        if(source == destination) return true;
+
+        for(int neighbor: adj[source]){
+            if(!visited[neighbor]){
+                visited[neighbor] = true;
+                boolean isConnected = DFS(neighbor, destination, visited);
+
+                if(isConnected) return true;
+            }
+        }
+
+        return false;
     }
 }
