@@ -1,13 +1,17 @@
+import javax.swing.tree.TreeNode;
+
 class BSTNode{
     int data;
     BSTNode left;
     BSTNode right;
-
-    BSTNode(int data){
-        this.data = data;
-        this.left = null;
-        this.right = null;
+    BSTNode() {}
+    BSTNode(int data) {this.data = data;}
+    BSTNode(int val, BSTNode left, BSTNode right) {
+       this.data = val;
+       this.left = left;
+       this.right = right;
     }
+
 
 }
 
@@ -17,7 +21,7 @@ public class BST {
 
     public BSTNode add(BSTNode root, int data){
        
-        if(root == null){
+        if(root == null) {
             BSTNode newNode = new BSTNode(data);
             root = newNode;
         }
@@ -158,5 +162,6 @@ public class BST {
         printBSTPostOrder(root.right);
         System.out.print(root.data+">");
     }
+
     
 }
