@@ -1,10 +1,13 @@
 package tree;
 
+import javax.swing.tree.TreeNode;
 import java.util.*;
+import static java.lang.Math.abs;
 
 public class Tree {
 
     static Scanner scanner = new Scanner(System.in);
+    static int max = 0;
     public static void main(String[] args) {
         Node root = createTree();
        /* printInOrder(root);
@@ -76,7 +79,9 @@ public class Tree {
     public static int height(Node root){
         if(root == null) return 0;
 
-        return Math.max(height(root.left), height(root.right)) + 1;
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        return 1+ Math.max(leftHeight, rightHeight);
 
     }
 
@@ -161,9 +166,8 @@ public class Tree {
 
         levelMap.putIfAbsent(level, root.data);
 
-        level+=1;
-        getRightViewMap(root.right, levelMap, level);
-        getRightViewMap(root.left, levelMap, level);
+        getRightViewMap(root.right, levelMap, level + 1);
+        getRightViewMap(root.left, levelMap, level + 1);
 
         return levelMap;
     }
@@ -210,6 +214,66 @@ public class Tree {
         return levelMap;
     }
 
+    private boolean isSymmetric(Node root){
+
+        return root == null || isSymmetricUtil(root.left, root.right);
+    }
+
+    private boolean isSymmetricUtil(Node leftNode, Node rightNode){
+
+        if( leftNode == null || rightNode == null)
+            return leftNode == rightNode;
+
+        if(leftNode.data != rightNode.data){
+            return false;
+        }
+
+        boolean check1 = isSymmetricUtil(leftNode.left, rightNode.right);
+        boolean check2 = isSymmetricUtil(leftNode.left, rightNode.left);
+
+        return check1 && check2;
+
+    }
+
+
+
+    private static List bottomView(Node root){
+
+
+        Queue<Tuple> tupleQueue = new LinkedList<>();
+        Map<Integer, Integer> vertivalMap = new TreeMap<>();
+        tupleQueue.offer(new Tuple(root, 0));
+
+        while(!tupleQueue.isEmpty()){
+
+            Tuple tuple = tupleQueue.peek();
+
+            Node node = tuple.getNode();
+            int verticalIndex = tuple.getVeritialIndex();
+
+            if(node.left != null){
+                tupleQueue.offer(new Tuple(node.left, verticalIndex - 1));
+            }
+
+            if(node.right != null){
+                tupleQueue.offer(new Tuple(node.right, verticalIndex + 1));
+            }
+
+            vertivalMap.put(verticalIndex, node.data);
+            tupleQueue.poll();
+
+        }
+
+        List<Integer> ans = new LinkedList<>();
+        vertivalMap.forEach((key, val)->{
+            ans.add(val);
+        });
+
+        return ans;
+
+    }
+
+
     public static void printBottomView(Node root){
 
         Map<Integer, Integer> map = getBottomViewMap(root, new LinkedHashMap<>(), 0);
@@ -243,12 +307,29 @@ public class Tree {
 
         if(root == null) return 0;
 
-        int dl = longestPath(root.left);
-        int dr = longestPath(root.right);
-        int curr = height(root.left) + height(root.right) + 1;
+        int leftHeight = longestPath(root.left);
+        int rightHeight = longestPath(root.right);
 
-        return Math.max(curr, Math.max(dl, dr));
+        max = Math.max(max, (leftHeight + rightHeight));
 
+        return Math.max(leftHeight, rightHeight) + 1;
+
+    }
+
+    public static boolean isBalance = true;
+    public static int isBalance(Node root){
+
+        if(root == null)
+            return 0;
+
+        int leftHeight = isBalance(root.left);
+        int rightHeight = isBalance(root.right);
+
+        if(abs(leftHeight - rightHeight)>1){
+            isBalance = isBalance && false;
+        }
+
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 }
 

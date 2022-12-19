@@ -98,12 +98,11 @@ public class SlidingWindow {
             sum += nums[j];
             if((j - i + 1) < windowSize){
                 j++;
-                continue;
             }else if((j - i + 1) == windowSize){
                 maxSum = Math.max(sum, maxSum);
+                sum = sum - nums[i];
+                i++;j++;
             }
-            sum = sum - nums[i];
-            i++;j++;
         }
 
         return maxSum;
@@ -217,19 +216,16 @@ public class SlidingWindow {
             if (sum < k) {
                 j++;
                 continue;
-            }
-            else if (sum == k) {
+            } else if (sum == k) {
                 maxSize = Math.max(maxSize, j-i+1);
                 j++;
-            }
-            else if (sum > k) {
+            } else if (sum > k) {
                 while (sum > k) {
                     sum -= nums[i];
                     i++;
                 }
                 j++;
             }
-
         }
 
 

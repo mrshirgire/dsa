@@ -1,16 +1,46 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SortingAlgo {
 
     public static void main(String[] args) {
 
         //int[] arr = {4, 11, 5, 8, 10, -32, 0, -67};
-        int[] arr = {4, 3, 2, 1, 0};
+        //int[] arr = {4, 3, 2, 1, 0};
         //bubbleSort(arr);
         //selectionSort(arr);
-        cyclicSort(arr);
+        //cyclicSort(arr);
 
-        System.out.println(Arrays.toString(arr));
+        //.out.println(Arrays.toString(arr));
+        List<Integer> list = Arrays.asList(3, 5, 2, 1, 4);
+        System.out.println(quickSort(list));
+    }
+
+    public static List<Integer> quickSort(List<Integer>  arr){
+
+        if(arr.size() <= 1)
+            return arr;
+
+        int pivot = arr.get(0);
+
+        List<Integer> smallest = new ArrayList<>();
+        List<Integer> greatest = new ArrayList<>();
+
+        for(int i = 1; i< arr.size(); i++){
+            if(arr.get(i) <= pivot)
+                smallest.add(arr.get(i));
+            else
+                greatest.add(arr.get(i));
+        }
+
+        List<Integer> ans = new ArrayList<>();
+
+        ans.addAll(quickSort(smallest));
+        ans.add(pivot);
+        ans.addAll(quickSort(greatest));
+        return ans;
+
     }
 
     public static void selectionSort(int[] arr){
