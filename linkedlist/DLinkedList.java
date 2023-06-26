@@ -1,3 +1,5 @@
+package linkedlist;
+
 class DNode{
     int data;
     DNode next;

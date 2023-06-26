@@ -11,7 +11,6 @@ public class MorrisTraversal {
         }else{
             TreeUtils.TreeNode rightMostNode = rightMost(currNode.left, currNode);
 
-
             if(rightMostNode.right == null){
                 rightMostNode.right = currNode;
                 inOrder(currNode.left);
@@ -19,12 +18,7 @@ public class MorrisTraversal {
                 rightMostNode.right = null;
                 inOrder(currNode.right);
             }
-
-
         }
-
-
-
     }
 
     public static TreeUtils.TreeNode rightMost(TreeUtils.TreeNode node, TreeUtils.TreeNode currentNode){

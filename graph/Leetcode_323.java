@@ -1,52 +1,77 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Leetcode_323 {
 
     public static void main(String[] args) {
-        int n = 5;
-        int[][] edges = {{0,1},{0,2},{2,3},{2,4}};
-        System.out.println(countComponents(n, edges));
+        int n = 2;
+        int[][] edges = {{1,0}};
+        System.out.println(new Leetcode_323().countComponents(n, edges));
     }
 
-    public static int countComponents(int n, int[][] edges) {
+    public int countComponents(int n, int[][] edges) {
+
+        List<List<Integer>> adjList = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            adjList.add(new ArrayList<>());
+        }
+
+        for(int[] edge: edges){
+            adjList.get(edge[0]).add(edge[1]);
+        }
+
+        int[] inDegrees = new int[n];
+        for(int[] edge: edges){
+            inDegrees[edge[1]]++;
+        }
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>(Comparator.comparingInt(pair -> pair.inDegree));
+        for(int i = 0; i < n; i++){
+            pq.add(new Pair(i,inDegrees[i]));
+        }
 
         int[] visited = new int[n];
         int count = 0;
-        for(int i = 0; i<n;i++){
-            if(visited[i] == 1) continue;
-            dfs(i, visited, edges);
-            count++;
+        while(!pq.isEmpty()){
+            Pair pair = pq.poll();
+            int node = pair.val;
+            if(visited[node] == 0){
+                bfs(node, visited, adjList);
+                count++;
+            }
         }
+
         return count;
     }
 
 
-    public static void dfs(int i, int[] visited, int[][] edges){
+    public void bfs(int node, int[] visited, List<List<Integer>> adjList){
 
-        Stack<Integer> st = new Stack<>();
-        st.push(i);
-        visited[i] = 1;
-        while(!st.isEmpty()){
-            int num = st.pop();
-            List<int[]> arr = new ArrayList<>();
-            for(int k = 0; k<edges.length;k++){
-                if(edges[k][0] == num){
-                    arr.add(edges[k]);
+        visited[node] = 1;
+        Queue<Integer> q = new LinkedList<>();
+        q.add(node);
+
+        while(!q.isEmpty()){
+
+            int currNode = q.poll();
+            for(int adjNode: adjList.get(currNode)){
+                if(visited[adjNode] == 0){
+                    q.add(adjNode);
+                    visited[adjNode] = 1;
                 }
             }
-
-            arr.forEach(elArr->{
-                for(int j = 0; j<elArr.length;j++){
-                    if(visited[elArr[j]] == 0){
-                        st.push(elArr[j]);
-                        visited[elArr[j]] = 1;
-                    }
-                }
-            });
         }
     }
+}
+
+class Pair {
+    int val;
+    int inDegree;
+
+    public Pair(int val, int inDegree){
+        this.val = val;
+        this.inDegree = inDegree;
+    }
+
 }

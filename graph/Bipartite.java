@@ -36,8 +36,7 @@ public class Bipartite {
             for(int i = 0; i < list.length; i++){
                 int adjEl = list[i];
                 if(colorArr[adjEl] == 0){
-                    int color = colorArr[nodeVal] == 1? 2: 1;
-                    colorArr[adjEl] = color;
+                    colorArr[adjEl] = colorArr[nodeVal] == 1? 2: 1;;
                     q.offer(adjEl);
                 }else if(colorArr[adjEl] == colorArr[nodeVal]){
                     return false;

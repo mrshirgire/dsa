@@ -1,9 +1,10 @@
+package linkedlist;
 
 class LinkedListDemo{
    
     public static void main(String[] args) {
         
-        // SLinkedList sLinkedList = new SLinkedList();
+        // linkedlist.SLinkedList sLinkedList = new linkedlist.SLinkedList();
         
         // sLinkedList.add(10);
         // sLinkedList.add(20);
@@ -13,7 +14,7 @@ class LinkedListDemo{
         // sLinkedList.delete(20);
         //sLinkedList.printList();
 
-        // DLinkedList dLinkedList = new DLinkedList();
+        // linkedlist.DLinkedList dLinkedList = new linkedlist.DLinkedList();
         
         // dLinkedList.add(10);
         // dLinkedList.add(20);

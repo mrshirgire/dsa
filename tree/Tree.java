@@ -1,8 +1,7 @@
 package tree;
 
-import javax.swing.tree.TreeNode;
+
 import java.util.*;
-import static java.lang.Math.abs;
 
 public class Tree {
 
@@ -18,6 +17,8 @@ public class Tree {
         System.out.println(min(root));*/
 
         //printNodeLevelWise(root);
+        List<Integer> ans = iterativeInOrder(root);
+        System.out.println(ans);
         printLeftView(root);
         printRightView(root);
         printTopView(root);
@@ -26,6 +27,24 @@ public class Tree {
         System.out.println("diameter: "+diameter);
 
 
+    }
+
+    static ArrayList<Integer> iterativeInOrder(Node root) {
+
+        Stack<Node> st = new Stack<>();
+        st.push(root);
+        ArrayList<Integer> ans = new ArrayList<>();
+        while(!st.isEmpty()){
+            Node currNode = st.peek();
+            if(currNode.left != null) {
+                st.push(currNode.left);
+            }else{
+                ans.add(st.pop().data);
+                if(currNode.right != null) st.push(currNode.right);
+            }
+        }
+
+        return ans;
     }
 
     private static Node createTree() {
@@ -146,7 +165,6 @@ public class Tree {
         level+=1;
         getLeftViewMap(root.left, levelMap, level);
         getLeftViewMap(root.right, levelMap, level);
-
         return levelMap;
     }
 
@@ -229,10 +247,42 @@ public class Tree {
         }
 
         boolean check1 = isSymmetricUtil(leftNode.left, rightNode.right);
-        boolean check2 = isSymmetricUtil(leftNode.left, rightNode.left);
+        boolean check2 = isSymmetricUtil(leftNode.right, rightNode.left);
 
         return check1 && check2;
 
+    }
+
+
+    public List<List<Integer>> zigzagTraversal(Node node){
+
+        int riverseFlag = 0;
+        Queue<Node> q = new LinkedList<>();
+        q.add(node);
+
+        List<List<Integer>> ans = new LinkedList<>();
+        while(!q.isEmpty()){
+
+            int qSize = q.size();
+            List<Integer> subList = new LinkedList<>();
+            for(int i = 0; i < qSize; i++){
+
+                Node currentNode = q.poll();
+                subList.add(currentNode.data);
+                if(currentNode.left != null) q.add(currentNode.left);
+                if(currentNode.right != null) q.add(currentNode.right);
+            }
+
+            boolean b = riverseFlag == 1 ? ans.add(reverseList(subList)) : ans.add(subList);
+        }
+
+        return ans;
+    }
+
+
+    private List<Integer> reverseList(List<Integer> list){
+
+     return null;
     }
 
 
@@ -302,7 +352,7 @@ public class Tree {
         return convertToDLL(root.right, head, prev);
     }
 
-
+    static int longestPath = 0;
     public static int longestPath(Node root){
 
         if(root == null) return 0;
@@ -310,9 +360,24 @@ public class Tree {
         int leftHeight = longestPath(root.left);
         int rightHeight = longestPath(root.right);
 
-        max = Math.max(max, (leftHeight + rightHeight));
+        int newPath = leftHeight + rightHeight;
+        longestPath = newPath > longestPath? newPath: longestPath;
 
-        return Math.max(leftHeight, rightHeight) + 1;
+        return 1 + Math.max(leftHeight, rightHeight);
+
+    }
+
+    static int maxSum = 0;
+    public static int maxSumPath(Node node){
+        if(node == null) return 0;
+
+        int leftSum = maxSumPath(node.left);
+        int rightSum = maxSumPath(node.right);
+
+        int newSum = node.data + leftSum + rightSum;
+        maxSum = Math.max(maxSum,newSum);
+
+        return node.data + Math.max(leftSum, rightSum);
 
     }
 
@@ -324,12 +389,30 @@ public class Tree {
 
         int leftHeight = isBalance(root.left);
         int rightHeight = isBalance(root.right);
-
-        if(abs(leftHeight - rightHeight)>1){
-            isBalance = isBalance && false;
-        }
+        if(leftHeight == -1 || rightHeight == -1
+            || Math.abs(leftHeight - rightHeight) > 1) return -1;
 
         return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    List<Integer> path = new LinkedList<>();
+    private boolean rootToNodePath(TreeNode node, int target){
+
+        if(node == null) return false;
+
+        path.add(node.val);
+        if(node.val == target){
+            return true;
+        }
+
+        path.add(node.val);
+        boolean left = rootToNodePath(node.left, target);
+        if(left) return left;
+        boolean right = rootToNodePath(node.right, target);
+        if(right) return right;
+
+        path.remove(node.val);
+        return false;
     }
 }
 

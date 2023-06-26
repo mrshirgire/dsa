@@ -1,21 +1,24 @@
 package dp;
 
 public class LCS {
-    static String str1 = "abedgh";
-    static String str2 =  "abedfhr";
+    static String str1 = "eqvvhtcsaaqtqesvvqch";
+    static String str2 =  "eqvvhtcsaaqtqesvvqch";
     static int[][] T = new int[str1.length() + 1][str2.length() + 1];
 
 
 
     public static void main(String[] args) {
+
         for(int i = 0; i<=str1.length(); i++){
             for(int j = 0; j<=str2.length(); j++){
                 T[i][j] = -1;
             }
         }
+
+        String reverseString = new StringBuilder().append(str1).reverse().toString();
         //System.out.println(recursiveLCS(str1, str2, str1.length(), str2.length()));
         //System.out.println(LCS(str1,str2, str1.length(), str2.length()));
-        printLCS(str1, str2);
+        printLCS(str1, reverseString);
     }
 
     // longestCommonSubSequence with recursion
@@ -26,10 +29,9 @@ public class LCS {
 
         if(str1.charAt(m-1) == str2.charAt(n - 1)){
             return (1 + recursiveLCS(str1,str2, m - 1, n - 1));
-        }else{
-            return Math.max(recursiveLCS(str1,str2, m - 1, n), recursiveLCS(str1,str2, m, n - 1));
         }
 
+        return Math.max(recursiveLCS(str1,str2, m - 1, n), recursiveLCS(str1,str2, m, n - 1));
     }
 
 
@@ -50,6 +52,28 @@ public class LCS {
                     longestCommonSubSequence(str1, str2, m - 1, n)
             );
         }
+    }
+
+
+    public static int LCS(String text1, String text2){
+
+        int[][] dp = new int[text1.length() + 1][text2.length() + 1];
+
+        for(int i = 0; i <= text1.length(); i++){
+            for(int j = 0; j <= text2.length(); j++){
+                if(i == 0 || j == 0){
+                    dp[i][j] = 0;
+                }else{
+                    if(text1.charAt(i-1) == text2.charAt(j-1)){
+                         dp[i][j] = 1 + dp[i - 1][j - 1];
+                    }else{
+                         dp[i][j] = Math.max( dp[i - 1][j], dp[i][j - 1]);
+                    }
+                }
+            }
+        }
+
+        return dp[text1.length() + 1][text2.length() + 1];
     }
 
     public static int longestCommonSubString(String str1, String str2){
@@ -86,7 +110,7 @@ public class LCS {
 
         longestCommonSubSequence(str1, str2, m, n);
 
-        while( m>0 || n>0){
+        while( m>0 && n>0){
 
             char c1 = str1.charAt(m-1);
             char c2 = str2.charAt(n-1);
