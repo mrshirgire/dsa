@@ -25,14 +25,11 @@ public class SlidingWindow {
     }
 
     private static int anagramCount(String s, String s1){
+
         int count = 0;
-
         int i=0, j=0;
-
         Map<Character, Integer> map = new HashMap<>();
         for(int k=0; k<s1.length(); k++){
-
-
             int cnt = map.containsKey(s.charAt(k)) ? map.get(s.charAt(k)) + 1: 1;
             map.put(s.charAt(k), cnt);
         }
@@ -240,8 +237,10 @@ public class SlidingWindow {
         while (j < s.length()){
 
             Character c = s.charAt(j);
-            if (map.get(c) == null) map.put(c,1);
-            else map.put(c, map.get(c) + 1);
+            if (map.get(c) == null)
+                map.put(c,1);
+            else
+                map.put(c, map.get(c) + 1);
 
             if(map.size() < k) {
                 j++;
@@ -255,7 +254,8 @@ public class SlidingWindow {
                     Character c1 = s.charAt(i);
                     int charCount = map.get(c1);
                     map.put(c1, charCount - 1 );
-                    if (--charCount == 0) map.remove(c1);
+                    if (--charCount == 0)
+                        map.remove(c1);
                     i++;
                 }
                 j++;
