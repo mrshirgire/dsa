@@ -12,7 +12,7 @@ public class Tuple {
         this.verticalIndex = verticalIndex;
     }
 
-    public int getVeritialIndex(){
+    public int getVerticalIndex(){
         return this.verticalIndex;
     }
 

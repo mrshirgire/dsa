@@ -9,8 +9,6 @@ public class LPS {
         //System.out.println(recursiveLCS(str, reverseString, str.length(), str.length()));
 
         longestPalindrome(str);
-
-
     }
 
     public static int recursiveLCS(String str1, String str2, int m, int n){

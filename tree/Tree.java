@@ -256,7 +256,7 @@ public class Tree {
 
     public List<List<Integer>> zigzagTraversal(Node node){
 
-        int riverseFlag = 0;
+        int reverseFlag = 0;
         Queue<Node> q = new LinkedList<>();
         q.add(node);
 
@@ -273,7 +273,7 @@ public class Tree {
                 if(currentNode.right != null) q.add(currentNode.right);
             }
 
-            boolean b = riverseFlag == 1 ? ans.add(reverseList(subList)) : ans.add(subList);
+            boolean b = reverseFlag == 1 ? ans.add(reverseList(subList)) : ans.add(subList);
         }
 
         return ans;
@@ -291,7 +291,7 @@ public class Tree {
 
 
         Queue<Tuple> tupleQueue = new LinkedList<>();
-        Map<Integer, Integer> vertivalMap = new TreeMap<>();
+        Map<Integer, Integer> verticalMap = new TreeMap<>();
         tupleQueue.offer(new Tuple(root, 0));
 
         while(!tupleQueue.isEmpty()){
@@ -299,7 +299,7 @@ public class Tree {
             Tuple tuple = tupleQueue.peek();
 
             Node node = tuple.getNode();
-            int verticalIndex = tuple.getVeritialIndex();
+            int verticalIndex = tuple.getVerticalIndex();
 
             if(node.left != null){
                 tupleQueue.offer(new Tuple(node.left, verticalIndex - 1));
@@ -309,13 +309,13 @@ public class Tree {
                 tupleQueue.offer(new Tuple(node.right, verticalIndex + 1));
             }
 
-            vertivalMap.put(verticalIndex, node.data);
+            verticalMap.put(verticalIndex, node.data);
             tupleQueue.poll();
 
         }
 
         List<Integer> ans = new LinkedList<>();
-        vertivalMap.forEach((key, val)->{
+        verticalMap.forEach((key, val)->{
             ans.add(val);
         });
 
