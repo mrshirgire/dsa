@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Graph {
+public class Graph  {
 
     static List<Integer>[] adj;
     List<Integer> bfs = new ArrayList<>();
