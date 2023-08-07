@@ -12,7 +12,7 @@ public class SegmentTree {
             return;
         }
 
-        int mid = end - (start + end)/2;
+        int mid = start + (end - start)/2;
         buildSegTree(start, end, 2 * ind + 1);
         buildSegTree(mid + 1, end, 2 * ind + 1);
 
@@ -26,7 +26,7 @@ public class SegmentTree {
 
         if(start >= rLeft && end <= rRight) return seg[index];
 
-        int mid = end - (start + end)/2;
+        int mid = start + (end - start)/2;
         int leftAns = rangeQuery(start, mid, rLeft, rRight, 2 * index + 1);
         int rightAns = rangeQuery(mid + 1, end , rLeft, rRight, 2 * index + 2);
 
@@ -35,21 +35,25 @@ public class SegmentTree {
 
     }
 
-    public void updateSeg(int val, int updateIndex, int start, int end, int index){
+    public void updateSegTree(int val, int updateIndex, int start, int end, int index){
 
         if(start == end){
             seg[updateIndex] = val;
             return;
         }
 
-        int mid = end - (start + end)/2;
+        int mid = start + (end - start)/2;
         if(updateIndex <=mid){
-            updateSeg(val, updateIndex, start, mid, 2 * index + 1);
+            updateSegTree(val, updateIndex, start, mid, 2 * index + 1);
         }else{
-            updateSeg(val, updateIndex, mid + 1, end, 2 * index + 2);
+            updateSegTree(val, updateIndex, mid + 1, end, 2 * index + 2);
         }
 
         seg[index] = Math.min(seg[ 2 * index + 1], seg[2 * index + 2]);
+
+    }
+
+    public static void main(String[] args) {
 
     }
 }
